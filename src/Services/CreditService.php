@@ -51,7 +51,7 @@ class CreditService
                 'meta' => $meta,
             ]);
 
-            if (! $expiresAt) {
+            if (!$expiresAt) {
                 $credit = $this->addNonExpiringCredit(
                     $holder,
                     $amount,
@@ -82,18 +82,17 @@ class CreditService
         float $amount,
     ): Credit {
         $credit = $this->creditModel->query()
-            ->where('can_expire', false)
+            ->whereNull('expires_at')
             ->isHolder($holder)
             ->lockForUpdate()
             ->first();
 
-        if (! $credit) {
+        if (!$credit) {
             $credit = $this->creditModel->newInstance([
                 'holder_type' => $holder->getMorphClass(),
                 'holder_id' => $holder->getKey(),
                 'initial_balance' => 0,
                 'remaining_balance' => 0,
-                'can_expire' => false,
             ]);
         }
 
@@ -114,7 +113,6 @@ class CreditService
             'initial_balance' => $amount,
             'remaining_balance' => $amount,
             'expires_at' => $expiresAt,
-            'can_expire' => true,
         ]);
     }
 
@@ -126,7 +124,7 @@ class CreditService
         ?array $meta = null,
     ) {
 
-        if (! $this->checkHolderCredit($holder, $amount)) {
+        if (!$this->checkHolderCredit($holder, $amount)) {
             throw new \Exception('Insufficient credit');
         }
 
@@ -160,7 +158,6 @@ class CreditService
                         : abs($remainingAmount),
                     'holder_type' => $credit->holder_type,
                     'holder_id' => $credit->holder_id,
-                    'can_expire' => $credit->can_expire,
                 ];
 
                 $details[] = [
@@ -203,7 +200,7 @@ class CreditService
             ->isHolder($holder)
             ->notExpired()
             ->hasRemainingBalance()
-            ->orderBy('can_expire', 'desc')
+            ->orderBy('unique_non_expire_holder', 'asc')
             ->orderBy('expires_at', 'asc')
             ->lockForUpdate()
             ->get([
@@ -211,7 +208,6 @@ class CreditService
                 'remaining_balance',
                 'holder_type',
                 'holder_id',
-                'can_expire',
             ]);
     }
 

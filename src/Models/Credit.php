@@ -13,7 +13,6 @@ class Credit extends Model
         'holder_id',
         'initial_balance',
         'remaining_balance',
-        'can_expire',
         'expires_at',
         'meta',
     ];
@@ -36,7 +35,7 @@ class Credit extends Model
     public function scopeNotExpired(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {
-            $query->where('can_expire', false)
+            $query->whereNull('expires_at')
                 ->orWhere('expires_at', '>', now());
         });
     }
