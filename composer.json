@@ -1,0 +1,70 @@
+{
+    "name": "ageekdev/geek-credit",
+    "description": ":package_description",
+    "keywords": [
+        "laravel",
+        "geek-credit"
+    ],
+    "homepage": "https://github.com/ageekdev/geek-credit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": ":author_name",
+            "email": ":author_email",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2",
+        "illuminate/contracts": "^10.0",
+        "illuminate/database": "^10.0",
+        "illuminate/support": "^10.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.10",
+        "nunomaduro/collision": "^6.0|^7.0",
+        "nunomaduro/larastan": "^2.0",
+        "orchestra/testbench": "^7.0|^8.0",
+        "pestphp/pest": "^1.0|^2.0",
+        "pestphp/pest-plugin-laravel": "^1.4|^2.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ageekdev\\GeekCredit\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ageekdev\\GeekCredit\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ageekdev\\GeekCredit\\GeekCreditServiceProvider"
+            ],
+            "aliases": {
+                "PakcageName": "Ageekdev\\GeekCredit\\Facades\\GeekCredit"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
