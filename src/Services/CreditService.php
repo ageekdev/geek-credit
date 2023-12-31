@@ -152,35 +152,27 @@ class CreditService
 
             foreach ($credits as $credit) {
                 $remainingAmount -= $credit->remaining_balance;
+
+                $creditUpdates[] = [
+                    'id' => $credit->getKey(),
+                    'remaining_balance' => $remainingAmount > 0
+                        ? 0
+                        : abs($remainingAmount),
+                    'holder_type' => $credit->holder_type,
+                    'holder_id' => $credit->holder_id,
+                    'can_expire' => $credit->can_expire,
+                ];
+
+                $details[] = [
+                    'credit_id' => $credit->getKey(),
+                    'amount' => $remainingAmount > 0
+                        ? $credit->remaining_balance
+                        : abs($remainingAmount),
+                    'credit_transaction_id' => $creditTransaction->getKey(),
+                ];
+
                 if ($remainingAmount <= 0) {
-                    $creditUpdates[] = [
-                        'id' => $credit->getKey(),
-                        'remaining_balance' => abs($remainingAmount),
-                        'holder_type' => $credit->holder_type,
-                        'holder_id' => $credit->holder_id,
-                        'can_expire' => $credit->can_expire,
-                    ];
-
-                    $details[] = [
-                        'credit_id' => $credit->getKey(),
-                        'amount' => $amount,
-                        'credit_transaction_id' => $creditTransaction->getKey(),
-                    ];
                     break;
-                } else {
-                    $creditUpdates[] = [
-                        'id' => $credit->getKey(),
-                        'remaining_balance' => 0,
-                        'holder_type' => $credit->holder_type,
-                        'holder_id' => $credit->holder_id,
-                        'can_expire' => $credit->can_expire,
-                    ];
-
-                    $details[] = [
-                        'credit_id' => $credit->getKey(),
-                        'amount' => $credit->remaining_balance,
-                        'credit_transaction_id' => $creditTransaction->getKey(),
-                    ];
                 }
             }
 
