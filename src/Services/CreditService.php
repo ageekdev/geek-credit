@@ -143,21 +143,7 @@ class CreditService
                 'meta' => $meta,
             ]);
 
-            $credits = $this->creditModel
-                ->query()
-                ->isHolder($holder)
-                ->notExpired()
-                ->hasRemainingBalance()
-                ->orderBy('can_expire', 'desc')
-                ->orderBy('expires_at', 'asc')
-                ->lockForUpdate()
-                ->get([
-                    'id',
-                    'remaining_balance',
-                    'holder_type',
-                    'holder_id',
-                    'can_expire',
-                ]);
+            $credits = $this->getRemainingCreditByHolderForUpdate($holder);
 
             $remainingAmount = $amount;
 
@@ -215,6 +201,26 @@ class CreditService
 
             throw $e;
         }
+    }
+
+    public function getRemainingCreditByHolderForUpdate(
+        Model $holder,
+    ): Collection {
+        return $this->creditModel
+            ->query()
+            ->isHolder($holder)
+            ->notExpired()
+            ->hasRemainingBalance()
+            ->orderBy('can_expire', 'desc')
+            ->orderBy('expires_at', 'asc')
+            ->lockForUpdate()
+            ->get([
+                'id',
+                'remaining_balance',
+                'holder_type',
+                'holder_id',
+                'can_expire',
+            ]);
     }
 
     public function getExpiredCredits(): Collection
