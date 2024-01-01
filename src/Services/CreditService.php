@@ -51,7 +51,7 @@ class CreditService
                 'meta' => $meta,
             ]);
 
-            if (!$expiresAt) {
+            if (! $expiresAt) {
                 $credit = $this->addNonExpiringCredit(
                     $holder,
                     $amount,
@@ -87,7 +87,7 @@ class CreditService
             ->lockForUpdate()
             ->first();
 
-        if (!$credit) {
+        if (! $credit) {
             $credit = $this->creditModel->newInstance([
                 'holder_type' => $holder->getMorphClass(),
                 'holder_id' => $holder->getKey(),
@@ -116,7 +116,7 @@ class CreditService
         ]);
     }
 
-    public function useCredit(
+    public function useCreditFromHolder(
         Model $holder,
         float $amount,
         string $name,
@@ -124,7 +124,7 @@ class CreditService
         ?array $meta = null,
     ) {
 
-        if (!$this->checkHolderCredit($holder, $amount)) {
+        if (! $this->checkHolderCredit($holder, $amount)) {
             throw new \Exception('Insufficient credit');
         }
 
@@ -141,7 +141,7 @@ class CreditService
                 'meta' => $meta,
             ]);
 
-            $credits = $this->getRemainingCreditByHolderForUpdate($holder);
+            $credits = $this->getRemainingCreditFromHolderForUpdate($holder);
 
             $remainingAmount = $amount;
 
@@ -192,7 +192,10 @@ class CreditService
         }
     }
 
-    public function getRemainingCreditByHolderForUpdate(
+    /**
+     * @return \Illuminate\Support\Collection<array-key, Credit>
+     */
+    public function getRemainingCreditFromHolderForUpdate(
         Model $holder,
     ): Collection {
         return $this->creditModel
