@@ -2,19 +2,19 @@
 
 namespace Ageekdev\GeekCredit\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $credit_transaction_id
+ * @property int $credit_id
+ * @property float $amount
+ * @property-read ?\Illuminate\Support\Carbon $created_at
+ * @property-read ?\Illuminate\Support\Carbon $updated_at
+ */
 class CreditTransactionDetail extends Model
 {
-    use HasFactory;
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
     protected $fillable = [

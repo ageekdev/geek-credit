@@ -11,15 +11,7 @@ class GeekCreditServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->loadMigrationsFrom([
-            dirname(__DIR__).'/database',
-        ]);
-
-        $this->mergeConfigFrom(__DIR__.'/../config/geek-credit.php', 'geek-credit');
-
-        $this->app->singleton('geek-credit', function () {
-            return new GeekCredit();
-        });
+        $this->configure();
     }
 
     /**
@@ -27,8 +19,32 @@ class GeekCreditServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/../config/geek-credit.php' => config_path('geek-credit.php'),
-        ], 'config');
+        $this->registerPublishing();
+    }
+
+    /**
+     * Setup the configuration.
+     */
+    protected function configure(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/geek-credit.php', 'geek-credit'
+        );
+    }
+
+    /**
+     * Register the package's publishable resources.
+     */
+    protected function registerPublishing(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/geek-credit.php' => $this->app->configPath('geek-credit.php'),
+            ], 'geek-credit-config');
+
+            $this->publishes([
+                __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
+            ], 'geek-credit-migrations');
+        }
     }
 }

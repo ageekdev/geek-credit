@@ -9,7 +9,7 @@ enum CreditTransactionType: int
 
     public function text(): string
     {
-        return match ($this->value) {
+        return match ($this) {
             self::In => 'In',
             self::Out => 'Out',
         };
@@ -17,11 +17,11 @@ enum CreditTransactionType: int
 
     public function isOut(): bool
     {
-        return $this->value === self::Out;
+        return $this === self::Out;
     }
 
     public function isIn(): bool
     {
-        return $this->value === self::In;
+        return $this === self::In;
     }
 }

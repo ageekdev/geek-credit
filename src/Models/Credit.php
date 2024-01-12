@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property int $id
+ * @property string $holder_type
+ * @property string|int $holder_id
+ * @property float $initial_balance
+ * @property float $remaining_balance
+ * @property array $meta
+ * @property ?\Illuminate\Support\Carbon $expires_at
+ * @property-read ?\Illuminate\Support\Carbon $created_at
+ * @property-read ?\Illuminate\Support\Carbon $updated_at
+ */
 class Credit extends Model
 {
     protected $fillable = [

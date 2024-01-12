@@ -5,7 +5,7 @@ namespace Ageekdev\GeekCredit\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Ageekdev\GeekCredit\geek-credit
+ * @see \Ageekdev\GeekCredit\GeekCredit
  */
 class GeekCredit extends Facade
 {
