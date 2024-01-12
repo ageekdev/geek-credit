@@ -1,6 +1,5 @@
 <h1 align="center">Geek Credit</h1>
 
-[![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![Laravel 10.x](https://img.shields.io/badge/Laravel-10.x-red.svg?style=flat-square)](http://laravel.com/docs/10.x)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/ageekdev/geek-credit/run-tests.yml?label=tests&style=flat-square)](https://github.com/ageekdev/geek-credit/actions/workflows/run-tests.yml)
 
