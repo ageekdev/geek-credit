@@ -1,16 +1,10 @@
-You can find instructions for submitting a new package proposal in [this repo](https://github.com/ageekdev/packages).
-
-# A skeleton repo for contributions
-
-<h1 align="center">geek-credit</h1>
+<h1 align="center">Geek Credit</h1>
 
 [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![Laravel 10.x](https://img.shields.io/badge/Laravel-10.x-red.svg?style=flat-square)](http://laravel.com/docs/10.x)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/ageekdev/geek-credit/run-tests.yml?label=tests&style=flat-square)](https://github.com/ageekdev/geek-credit/actions/workflows/run-tests.yml)
 
-Note: Replace GeekCredit :author_name :author_username :author_email geek-credit :package_description with their correct values in README.md, CHANGELOG.md, CONTRIBUTING.md, LICENSE.md, composer.json and other files, then delete this line. Tip: Use "Find in Path/Files" in your code editor to find these keywords within the package directory and replace all occurrences with your specified term.
-
-This is where your description should go. Add a little code example so build can understand real quick how the package can be used. Try and limit it to a paragraph or two.
+The Geek Credit Package simplifies credit management and in-app purchases in Laravel apps. With transaction history and customizable features, it's ideal for implementing credit-based systems.
 
 ## Installation
 
@@ -23,12 +17,29 @@ composer require ageekdev/geek-credit
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="geek-credit-config"
+php artisan vendor:publish --provider="Ageekdev\GeekCredit\GeekCreditServiceProvider" --tag="geek-credit-config"
 ```
 
+You can publish the migration with:
 
-## Usage
+```bash
+php artisan vendor:publish --provider="Ageekdev\GeekCredit\GeekCreditServiceProvider" --tag="geek-credit-migrations"
+```
+## Using Credit
 
+Add the HasCredit trait on App\User model or any model who acts as user in your app.
+
+```php
+use Illuminate\Database\Eloquent\Model;
+use Ageekdev\GeekCredit\Traits\HasCredit;
+
+class UserModel extends Model
+{
+    use HasCredit;
+
+    ...
+}
+```
 
 ## Testing
 
@@ -50,7 +61,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
 - [All Contributors](../../contributors)
 
 ## License
