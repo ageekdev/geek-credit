@@ -22,7 +22,7 @@ trait HasCredit
 
     public function getRemainingBalanceAttribute(): float
     {
-        return $this->credits()
+        return (float) $this->credits()
             ->where('expires_at', '>', now())
             ->where('remaining_balance', '>', 0)
             ->sum('remaining_balance');
