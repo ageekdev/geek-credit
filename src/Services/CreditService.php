@@ -36,7 +36,8 @@ class CreditService
         string $name,
         ?Carbon $expiresAt = null,
         ?string $description = null,
-        ?array $meta = null,
+        ?array $transactionMeta = null,
+        ?array $creditMeta = null,
     ): void {
         DB::beginTransaction();
 
@@ -48,19 +49,21 @@ class CreditService
                 'type' => CreditTransactionType::In,
                 'name' => $name,
                 'description' => $description,
-                'meta' => $meta,
+                'meta' => $transactionMeta,
             ]);
 
             if (! $expiresAt) {
                 $credit = $this->addNonExpiringCredit(
                     $holder,
                     $amount,
+                    $creditMeta,
                 );
             } else {
                 $credit = $this->addExpiringCredit(
                     $holder,
                     $amount,
                     $expiresAt,
+                    $creditMeta,
                 );
             }
 
@@ -80,6 +83,7 @@ class CreditService
     public function addNonExpiringCredit(
         Model $holder,
         float $amount,
+        $meta = null,
     ): Credit {
         $credit = $this->creditModel->query()
             ->whereNull('expires_at')
@@ -93,6 +97,7 @@ class CreditService
                 'holder_id' => $holder->getKey(),
                 'initial_balance' => 0,
                 'remaining_balance' => 0,
+                'meta' => $meta,
             ]);
         }
 
@@ -106,6 +111,7 @@ class CreditService
         Model $holder,
         float $amount,
         Carbon $expiresAt,
+        ?array $meta = null,
     ): Credit {
         return $this->creditModel->create([
             'holder_type' => $holder->getMorphClass(),
@@ -113,6 +119,7 @@ class CreditService
             'initial_balance' => $amount,
             'remaining_balance' => $amount,
             'expires_at' => $expiresAt,
+            'meta' => $meta,
         ]);
     }
 
