@@ -85,7 +85,7 @@ class CreditService
         float $amount,
         $meta = null,
     ): Credit {
-        $credit = $this->creditModel->query()
+        $credit = $this->creditModel
             ->whereNull('expires_at')
             ->isHolder($holder)
             ->lockForUpdate()
@@ -200,13 +200,12 @@ class CreditService
     }
 
     /**
-     * @return \Illuminate\Support\Collection<array-key, Credit>
+     * @return \Illuminate\Support\Collection<int, Credit>
      */
     public function getRemainingCreditFromHolderForUpdate(
         Model $holder,
-    ): Collection {
+    ) {
         return $this->creditModel
-            ->query()
             ->isHolder($holder)
             ->notExpired()
             ->hasRemainingBalance()

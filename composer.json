@@ -1,6 +1,6 @@
 {
     "name": "ageekdev/geek-credit",
-    "description": ":package_description",
+    "description": "To simplify credit management and in-app purchases in Laravel apps.",
     "keywords": [
         "laravel",
         "geek-credit"
@@ -9,8 +9,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "eidolex",
             "role": "Developer"
         }
     ],
@@ -22,11 +21,11 @@
     },
     "require-dev": {
         "laravel/pint": "^1.10",
-        "nunomaduro/collision": "^6.0|^7.0",
+        "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",
-        "orchestra/testbench": "^7.0|^8.0",
-        "pestphp/pest": "^1.0|^2.0",
-        "pestphp/pest-plugin-laravel": "^1.4|^2.0",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
